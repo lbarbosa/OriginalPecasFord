@@ -1,31 +1,61 @@
-'''
+# -*- coding: utf-8 -*-
+"""
 Graphical User Interface for file processing
 Autor: Lourenço Madruga Barbosa
 
 Funcionalidades da versão: 1.0.0
-'''
+"""
 import chardet
 
 
+# Open the file and create a Python list
 def openFile(filename, Encoding):
     fileline = []
     with open(filename, "r", encoding=Encoding) as fileLines:
         for line in fileLines:
             fileline.append(line.strip())
+
+    fileLines.close()
     return fileline
 
 
+# Process the original file to find the start line and end line of products
 def proc_Line(fileLines):
+    count_begin = 0
+    count_end = 0
+    count = 0
+
     for line in fileLines:
+        count = count + 1
         if line in "LOCK TABLES `cad_produtos` WRITE;":
-       # line = line.strip()
-            print(line)
+            if line != "":
+                count_begin = count
+                print(count_begin)
+            else:
+                count_begin = 0
+        else:
+            count_begin = 0
+        if line in "DROP TABLE" + " IF EXISTS `cad_produtos_fornecedores`;":
+            if line != "":
+                count_end = count
+                count_end = count_end - 3
+                print(count_end)
+            else:
+                count_begin = 0
+        else:
+            count_end = 0
+    return count_begin, count_end
 
-#   return fileline
 
-def returnEncoding(fileLines):
+# valid file encoding type
+def returnEncoding(fileLines, encoding):
     print("returnEncoding")
-    encoding = chardet.detect(open(fileLines, 'rb').read())['encoding']
+    if encoding != "":
+        encoding = encoding
+    else:
+        encoding = chardet.detect(open(fileLines, 'rb').read())['encoding']
+
+    print(encoding)
     return encoding
 
 

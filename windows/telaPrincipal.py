@@ -1,9 +1,9 @@
-'''
+"""
 Graphical User Interface for file processing
 Autor: Lourenço Madruga Barbosa
 
 Funcionalidades da versão: 1.0.0
-'''
+"""
 from doctest import master
 from tkinter.ttk import Progressbar
 

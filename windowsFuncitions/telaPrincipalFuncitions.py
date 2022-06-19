@@ -1,9 +1,9 @@
-'''
+"""
 Graphical User Interface for file processing
 Autor: Lourenço Madruga Barbosa
 
 Funcionalidades da versão: 1.0.0
-'''
+"""
 
 from tkinter import filedialog, messagebox
 from functions import arquivos
@@ -31,7 +31,7 @@ def fileProc(filename):
 
     if filename != "":
         arquivos.file(filename, extension, encoding, openType)
-        file = arquivos.openFile(filename, arquivos.returnEncoding(filename))
+        file = arquivos.openFile(filename, arquivos.returnEncoding(filename, "Windows-1252"))
         arquivos.proc_Line(file)
         #print(file)
     else:
