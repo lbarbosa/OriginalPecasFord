@@ -30,9 +30,14 @@ def fileProc(filename):
     openType = 'r'
 
     if filename != "":
-        arquivos.file(filename, extension, encoding, openType)
+        # Open File
+        arquivos.File(filename, extension, encoding, openType)
+        # Valid the encoding file
         file = arquivos.openFile(filename, arquivos.returnEncoding(filename, "Windows-1252"))
-        arquivos.proc_Line(file)
-        #print(file)
+        # process the file to validate where the product lines start and end
+        count_begin, count_end = arquivos.procLine(file)
+        # process the product line
+        arquivos.procProduto(count_begin, count_end, file)
+        print(count_begin, count_end)
     else:
         messagebox.showwarning("Alerta", "Nenhum arquivo selecionado!")

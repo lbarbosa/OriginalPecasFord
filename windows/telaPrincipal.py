@@ -29,7 +29,7 @@ class TelaPrincipal(tk.Tk):
         # Main menus
         menubar = tk.Menu(self)
         fileMenu = tk.Menu(menubar, tearoff=0)
-        fileMenu.add_command(label="Abrir", command=telaPrincipalFuncitions.openFile)
+        fileMenu.add_command(label="Abrir", command=lambda: filename.set(telaPrincipalFuncitions.openFile()))
         fileMenu.add_command(label="Salvar", command="self.model.donothing")
         fileMenu.add_command(label="Salvar como...", command="self.model.donothing")
         fileMenu.add_command(label="Fechar", command=telaPrincipalFuncitions.on_close)

@@ -8,19 +8,30 @@ Funcionalidades da versão: 1.0.0
 import chardet
 
 
+# valid file encoding type
+def returnEncoding(fileLines, encoding):
+    print("returnEncoding")
+    if encoding != "":
+        encoding = encoding
+    else:
+        encoding = chardet.detect(open(fileLines, 'rb').read())['encoding']
+    return encoding
+
+
 # Open the file and create a Python list
 def openFile(filename, Encoding):
+    print("openFile")
     fileline = []
     with open(filename, "r", encoding=Encoding) as fileLines:
         for line in fileLines:
             fileline.append(line.strip())
-
     fileLines.close()
     return fileline
 
 
 # Process the original file to find the start line and end line of products
-def proc_Line(fileLines):
+def procLine(fileLines):
+    print("proc_Line")
     count_begin = 0
     count_end = 0
     count = 0
@@ -30,36 +41,34 @@ def proc_Line(fileLines):
         if line in "LOCK TABLES `cad_produtos` WRITE;":
             if line != "":
                 count_begin = count
-                print(count_begin)
-            else:
-                count_begin = 0
-        else:
-            count_begin = 0
+
         if line in "DROP TABLE" + " IF EXISTS `cad_produtos_fornecedores`;":
             if line != "":
                 count_end = count
                 count_end = count_end - 3
-                print(count_end)
-            else:
-                count_begin = 0
-        else:
-            count_end = 0
+
     return count_begin, count_end
 
 
-# valid file encoding type
-def returnEncoding(fileLines, encoding):
-    print("returnEncoding")
-    if encoding != "":
-        encoding = encoding
-    else:
-        encoding = chardet.detect(open(fileLines, 'rb').read())['encoding']
+def procProduto(begin, end, fileLines):
+    print("proc_produto")
+    v_entrou = 0
+    insertInto = "INSERT INTO"+" `cad_produtos`(id, nome_produto, cod_barra, unidade, inf_adicional, pontos, id_moeda, modo_estoque, grade, kit, id_tipo, vr_compra, vr_venda, vr_venda_2, min_estoque, estoque, inativo, aliq_ipi, inside_icms_ipi, id_class_fiscal, aliq_id_base_icms, origem_produto, fracionado) VALUES"
+    produtosList = []
+    for i in range(begin, end):
+        newLine = fileLines[i].replace(");", ")").replace("),", ")")
+        if v_entrou == 0:
+            if newLine in insertInto:
+                v_entrou = 1
+                newLine = newLine.replace("INSERT INTO"+" `cad_produtos`", "").replace(" VALUES", "")
+                produtosList.append(newLine)
+        else:
+            produtosList.append(newLine)
+    print(produtosList[0])
+    print(produtosList[1])
 
-    print(encoding)
-    return encoding
 
-
-class file:
+class File:
 
     def __init__(self, fileName, extension, encoding, openType):
         self.fileName = fileName
