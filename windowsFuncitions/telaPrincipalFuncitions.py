@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Graphical User Interface for file processing
 Autor: Lourenço Madruga Barbosa
@@ -13,13 +14,24 @@ def on_close():
     quit()
 
 
-def openFile():
-    filename = filedialog.askopenfilename(initialdir="./",
-                                          title="Selecione o arquivo",
-                                          filetypes=(("Arquivo texto",
-                                                      "*.*"),
-                                                     ("Todos arquivos",
-                                                      "*.*")))
+def openFile(Botao):
+    if Botao == 1:
+        title = "Selecione o arquivo SQL"
+        filetypes = "Arquivo SQL"
+        types = "*.sql"
+        filename = filedialog.askopenfilename(initialdir="./",
+                                              title=title,
+                                              filetypes=((filetypes,
+                                                          types),
+                                                         ("Todos arquivos",
+                                                          "*.*")))
+
+    if Botao == 2:
+        title = "Selecione o arquivo XML"
+        filetypes = "Arquivo XML"
+        types = "*.xml"
+        filename = filedialog.askdirectory()
+
     return filename
 
 

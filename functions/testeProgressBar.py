@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Graphical User Interface for file processing
 Autor: Lourenço Madruga Barbosa
