@@ -110,9 +110,10 @@ class TelaPrincipal(tk.Tk):
         self.ButtonProcessa["image"] = self.imgButtonProc
         self.ButtonProcessa["text"] = "Processa SQL"
         self.ButtonProcessa["font"] = self.fontepadrao
-        self.ButtonProcessa["width"] = 80
+        self.ButtonProcessa["width"] = 120
+        self.ButtonProcessa["height"] = 25
         self.ButtonProcessa["compound"] = tk.LEFT
-        self.ButtonProcessa["command"] = lambda: telaPrincipalFuncitions.fileProc(filenameSql.get())
+        self.ButtonProcessa["command"] = lambda: telaPrincipalFuncitions.fileProc(filenameSql.get(), filenameXml.get())
         self.ButtonProcessa.pack(side=tk.TOP)
 
 #Frame 3 processamento do arquivo

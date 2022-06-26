@@ -19,8 +19,8 @@ def returnEncoding(fileLines, encoding):
 
 
 # Open the file and create a Python list
-def openFile(filename, Encoding):
-    print("openFile")
+def openFileSql(filename, Encoding):
+    print("openFileSql")
     fileline = []
     with open(filename, "r", encoding=Encoding) as fileLines:
         for line in fileLines:
@@ -30,7 +30,7 @@ def openFile(filename, Encoding):
 
 
 # Process the original file to find the start line and end line of products
-def procLine(fileLines):
+def procLineSql(fileLines):
     print("proc_Line")
     count_begin = 0
     count_end = 0
