@@ -9,7 +9,7 @@ Funcionalidades da versão: 1.0.0
 from tkinter import filedialog, messagebox
 from functions import arquivosSql
 from functions import arquivosXml
-
+from functions import mergeFiles
 
 def on_close():
     quit()
@@ -44,6 +44,7 @@ def fileProc(filenameSQL, filenameXML):
     openType = 'r'
 
     if filenameSQL != "" and filenameXML != "":
+#
         if filenameSQL != "":
             # Open File
             #arquivosSql.File(filenameSQL, extension, encoding, openType)
@@ -58,6 +59,7 @@ def fileProc(filenameSQL, filenameXML):
         else:
             messagebox.showwarning("Alerta", "Arquivo SQL não foi selecionado!")
 
+#chama o processamento do arquivo XML para criar uma lista com os dados relevantes
         if filenameXML != "":
             dirXml, subXml, arquXml = arquivosXml.getFileXml(filenameXML, "teste")
             xmlList = arquivosXml.procLineXml(dirXml, subXml, arquXml)
@@ -66,3 +68,9 @@ def fileProc(filenameSQL, filenameXML):
             messagebox.showwarning("Alerta", "Arquivo XML não foi selecionado!")
     else:
         messagebox.showwarning("Alerta", "Nenhum arquivo foi selecionado!")
+
+
+    if len(produtoList) != 0 and len(xmlList) != 0:
+            mergeFiles.procFiles(produtoList, xmlList)
+    else:
+        print("Nenhum dado processado")
