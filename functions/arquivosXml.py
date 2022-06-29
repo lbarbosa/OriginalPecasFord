@@ -21,6 +21,7 @@ def getFileXml(filename, Encoding):
 
 def procLineXml(dirXml, subXml, arquXml):
     print("procLineXml")
+    nfeList = []
     vl_cProd = ""
     vl_xProd = ""
     vl_NCM = ""
@@ -32,7 +33,6 @@ def procLineXml(dirXml, subXml, arquXml):
             filtro = "*"
             for child in root.iter(filtro):
                 vl_child = child.tag.replace("{http://www.portalfiscal.inf.br/nfe}", "")
-                #print(child.tag.replace("{http://www.portalfiscal.inf.br/nfe}", ""), child.text)
                 if vl_child == "cProd":
                    vl_cProd = child.text
 
@@ -43,8 +43,7 @@ def procLineXml(dirXml, subXml, arquXml):
                    vl_NCM = child.text
 
                 if vl_cProd != "" and vl_xProd != "" and vl_NCM != "":
-                    print(vl_cProd, vl_xProd, vl_NCM)
+                    nfe = (vl_cProd, vl_xProd, vl_NCM)
+                    nfeList.append(nfe)
                     vl_cProd = vl_xProd = vl_NCM = ""
-    # process the file to validate where the product lines start and end
-
-    # process the product line
+        return nfeList

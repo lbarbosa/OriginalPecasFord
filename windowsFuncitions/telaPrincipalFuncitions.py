@@ -52,15 +52,16 @@ def fileProc(filenameSQL, filenameXML):
             # process the file to validate where the product lines start and end
             count_begin, count_end = arquivosSql.procLineSql(file)
             # process the product line
-            arquivosSql.procProduto(count_begin, count_end, file)
-            print(count_begin, count_end)
+            produtoList = arquivosSql.procProduto(count_begin, count_end, file)
+            #print(count_begin, count_end)
+            print(produtoList)
         else:
             messagebox.showwarning("Alerta", "Arquivo SQL não foi selecionado!")
 
         if filenameXML != "":
             dirXml, subXml, arquXml = arquivosXml.getFileXml(filenameXML, "teste")
-            arquivosXml.procLineXml(dirXml, subXml, arquXml)
-
+            xmlList = arquivosXml.procLineXml(dirXml, subXml, arquXml)
+            print(xmlList)
         else:
             messagebox.showwarning("Alerta", "Arquivo XML não foi selecionado!")
     else:

@@ -64,8 +64,7 @@ def procProduto(begin, end, fileLines):
                 produtosList.append(newLine)
         else:
             produtosList.append(newLine)
-    print(produtosList[0])
-    print(produtosList[1])
+    return produtosList
 
 
 class File:
