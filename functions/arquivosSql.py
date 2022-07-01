@@ -60,11 +60,31 @@ def procProduto(begin, end, fileLines):
         if v_entrou == 0:
             if newLine in insertInto:
                 v_entrou = 1
-                newLine = newLine.replace("INSERT INTO"+" `cad_produtos`", "").replace(" VALUES", "")
-                produtosList.append(newLine)
+                newLine = newLine.replace("INSERT INTO"+" `cad_produtos`(", "").replace(") VALUES", "").replace(", ", ",")
+                procLine = procLineToList(newLine)
+                produtosList.append(procLine)
         else:
-            produtosList.append(newLine)
+            procLine = procLineToList(newLine.replace("(", "").replace(")", "").replace("'", "").replace(", ", ","))
+            produtosList.append(procLine)
     return produtosList
+
+
+def procLineToList(line):
+    lineProc = ()
+    if line != '':
+        id, nome_produto, cod_barra, unidade, inf_adicional, \
+        pontos, id_moeda, modo_estoque, grade, kit, id_tipo, \
+        vr_compra, vr_venda, vr_venda_2, min_estoque, estoque, \
+        inativo, aliq_ipi, inside_icms_ipi, id_class_fiscal, \
+        aliq_id_base_icms, origem_produto, fracionado = line.split(',')
+
+        lineProc = (id, nome_produto, cod_barra, unidade, inf_adicional,
+                    pontos, id_moeda, modo_estoque, grade, kit, id_tipo,
+                    vr_compra, vr_venda, vr_venda_2, min_estoque, estoque,
+                    inativo, aliq_ipi, inside_icms_ipi, id_class_fiscal,
+                    aliq_id_base_icms, origem_produto, fracionado)
+
+        return lineProc
 
 
 class File:

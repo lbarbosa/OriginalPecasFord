@@ -9,3 +9,10 @@ Funcionalidades da versão: 1.0.0
 
 def procFiles(arqusql, arquXml):
     print("procLineXml")
+    if arqusql != '' and arquXml != '':
+        for sql in arqusql:
+            print(sql[1])
+
+
+        for xml in arquXml:
+            print(xml[0])
