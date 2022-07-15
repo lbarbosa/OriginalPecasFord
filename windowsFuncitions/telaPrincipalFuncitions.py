@@ -11,6 +11,7 @@ from functions import arquivosSql
 from functions import arquivosXml
 from functions import mergeFiles
 
+
 def on_close():
     quit()
 
@@ -44,33 +45,33 @@ def fileProc(filenameSQL, filenameXML):
     openType = 'r'
 
     if filenameSQL != "" and filenameXML != "":
-#
+        #
         if filenameSQL != "":
             # Open File
-            #arquivosSql.File(filenameSQL, extension, encoding, openType)
+            # arquivosSql.File(filenameSQL, extension, encoding, openType)
             # Valid the encoding file
             file = arquivosSql.openFileSql(filenameSQL, arquivosSql.returnEncoding(filenameSQL, "Windows-1252"))
             # process the file to validate where the product lines start and end
             count_begin, count_end = arquivosSql.procLineSql(file)
             # process the product line
             produtoList = arquivosSql.procProduto(count_begin, count_end, file)
-            #print(count_begin, count_end)
-            print(produtoList)
+            # print(count_begin, count_end)
+            # print(produtoList)
         else:
             messagebox.showwarning("Alerta", "Arquivo SQL não foi selecionado!")
 
-#chama o processamento do arquivo XML para criar uma lista com os dados relevantes
+        # chama o processamento do arquivo XML para criar uma lista com os dados relevantes
         if filenameXML != "":
             dirXml, subXml, arquXml = arquivosXml.getFileXml(filenameXML, "teste")
             xmlList = arquivosXml.procLineXml(dirXml, subXml, arquXml)
-            print(xmlList)
+            # print(xmlList)
         else:
             messagebox.showwarning("Alerta", "Arquivo XML não foi selecionado!")
     else:
         messagebox.showwarning("Alerta", "Nenhum arquivo foi selecionado!")
 
-
     if len(produtoList) != 0 and len(xmlList) != 0:
-            mergeFiles.procFiles(produtoList, xmlList)
+        arqu_processado = mergeFiles.procFiles(produtoList, xmlList)
+        print(arqu_processado)
     else:
         print("Nenhum dado processado")

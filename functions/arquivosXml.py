@@ -5,13 +5,15 @@ Autor: Lourenço Madruga Barbosa
 
 Funcionalidades da versão: 1.0.0
 """
+
+from collections import OrderedDict
 import xml.etree.ElementTree as etXml
 import os
 
 
 # Open the file and create a Python list
 def getFileXml(filename, Encoding):
-    print("openFileXml")
+    #print("openFileXml")
     Encoding = Encoding
 
     for dir, sub, arqu in os.walk(filename):
@@ -20,7 +22,8 @@ def getFileXml(filename, Encoding):
 
 
 def procLineXml(dirXml, subXml, arquXml):
-    print("procLineXml")
+   # print("procLineXml")
+    resultantList = []
     nfeList = []
     vl_cProd = ""
     vl_xProd = ""
@@ -43,7 +46,10 @@ def procLineXml(dirXml, subXml, arquXml):
                    vl_NCM = child.text
 
                 if vl_cProd != "" and vl_xProd != "" and vl_NCM != "":
-                    nfe = (vl_cProd, vl_xProd, vl_NCM)
-                    nfeList.append(nfe)
-                    vl_cProd = vl_xProd = vl_NCM = ""
+                    nfe = [vl_cProd, vl_xProd, vl_NCM]
+                    if vl_cProd not in nfeList:
+                        nfeList.append(nfe)
+                        vl_cProd = vl_xProd = vl_NCM = ""
+
+
         return nfeList

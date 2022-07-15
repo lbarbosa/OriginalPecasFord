@@ -10,7 +10,7 @@ import chardet
 
 # valid file encoding type
 def returnEncoding(fileLines, encoding):
-    print("returnEncoding")
+    #print("returnEncoding")
     if encoding != "":
         encoding = encoding
     else:
@@ -20,7 +20,7 @@ def returnEncoding(fileLines, encoding):
 
 # Open the file and create a Python list
 def openFileSql(filename, Encoding):
-    print("openFileSql")
+    #print("openFileSql")
     fileline = []
     with open(filename, "r", encoding=Encoding) as fileLines:
         for line in fileLines:
@@ -31,7 +31,7 @@ def openFileSql(filename, Encoding):
 
 # Process the original file to find the start line and end line of products
 def procLineSql(fileLines):
-    print("proc_Line")
+    #print("proc_Line")
     count_begin = 0
     count_end = 0
     count = 0
@@ -51,7 +51,7 @@ def procLineSql(fileLines):
 
 
 def procProduto(begin, end, fileLines):
-    print("proc_produto")
+    #print("proc_produto")
     v_entrou = 0
     insertInto = "INSERT INTO"+" `cad_produtos`(id, nome_produto, cod_barra, unidade, inf_adicional, pontos, id_moeda, modo_estoque, grade, kit, id_tipo, vr_compra, vr_venda, vr_venda_2, min_estoque, estoque, inativo, aliq_ipi, inside_icms_ipi, id_class_fiscal, aliq_id_base_icms, origem_produto, fracionado) VALUES"
     produtosList = []
@@ -64,13 +64,23 @@ def procProduto(begin, end, fileLines):
                 procLine = procLineToList(newLine)
                 produtosList.append(procLine)
         else:
-            procLine = procLineToList(newLine.replace("(", "").replace(")", "").replace("'", "").replace(", ", ","))
+            print(newLine)
+            newLine = newLine.replace("   35,00", "35.00").replace("    330,00", "    330.00").replace(" 150,00",
+                                      " 150.00").replace("25,80", "25.80").replace(",U-", ".U-")
+            newLine = newLine.replace("0,00", "0.00").replace(",00", ".00").replace("0,0", "0.0").replace("220,'", "220")
+            newLine = newLine.replace("(- ,", "(-.").replace("(-,", "(-.").replace(",P", ".P").replace(", P", " P")
+            newLine = newLine.replace(",-P", "-P").replace(" , ", " ").replace(",P", "P").replace("   ,", "")
+            newLine = newLine.replace("230,'", "230'").replace("A,", "A").replace("B,", "B").replace(" ,", "")
+            newLine = newLine.replace("(,", "(.").replace(",P", "P").replace("G,'", "G'").replace("T,", "T.")
+            newLine = newLine.replace(",',", "',")
+            newLine = newLine.replace("(", "").replace(")", "").replace("'", "").replace(", ", ",")
+            procLine = procLineToList(newLine)
             produtosList.append(procLine)
     return produtosList
 
 
 def procLineToList(line):
-    lineProc = ()
+    lineProc = []
     if line != '':
         id, nome_produto, cod_barra, unidade, inf_adicional, \
         pontos, id_moeda, modo_estoque, grade, kit, id_tipo, \
@@ -78,11 +88,11 @@ def procLineToList(line):
         inativo, aliq_ipi, inside_icms_ipi, id_class_fiscal, \
         aliq_id_base_icms, origem_produto, fracionado = line.split(',')
 
-        lineProc = (id, nome_produto, cod_barra, unidade, inf_adicional,
+        lineProc = [id, nome_produto, cod_barra, unidade, inf_adicional,
                     pontos, id_moeda, modo_estoque, grade, kit, id_tipo,
                     vr_compra, vr_venda, vr_venda_2, min_estoque, estoque,
                     inativo, aliq_ipi, inside_icms_ipi, id_class_fiscal,
-                    aliq_id_base_icms, origem_produto, fracionado)
+                    aliq_id_base_icms, origem_produto, fracionado]
 
         return lineProc
 
